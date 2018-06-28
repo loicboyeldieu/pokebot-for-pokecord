@@ -82,7 +82,7 @@ async def auto_catch_pokemons(server, channel, embeds, author, content):
     global pexTask
     if channel.name in constants.CATCH_CHANNELS:
          for e in embeds:
-             if constants.POKEMON_APPEAR_MESSAGE in e['title']:
+             if "title" in e and constants.POKEMON_APPEAR_MESSAGE in e['title']:
                  url = e["image"]["url"]
                  hashcode = hashUtils.getHash(url)
                  pokeName = hashScores[hashcode]
@@ -91,8 +91,8 @@ async def auto_catch_pokemons(server, channel, embeds, author, content):
                      catchMessage = 'p!catch ' + pokeName
                      await client.send_message(channel, catchMessage)
                      print(" ##### - Legendary pokemon catched: " + pokeName)
-                     await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], constants.LEGENDARY_CATCHED_MESSAGE)
-                     await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], "p!info " + pokeName)
+                     await client.send_message(discordUtils.getChannel(client, constants.INFO_CHANNEL)[0], constants.LEGENDARY_CATCHED_MESSAGE)
+                     await client.send_message(discordUtils.getChannel(client, constants.INFO_CHANNEL)[0], "p!info " + pokeName)
 
 async def orders_from_captains(server, channel, embeds, author, content):
     global hashScores
