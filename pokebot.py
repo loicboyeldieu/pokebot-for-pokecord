@@ -102,7 +102,7 @@ async def orders_from_captains(server, channel, embeds, author, content):
     if content.startswith('ord='):
         print("Order received: " + content.split('=')[1])
         order = content.split('=')[1]
-        await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], order)
+        await client.send_message(discordUtils.getChannel(client, constants.INFO_CHANNEL)[0], order)
     elif content.startswith('task='):
         print("Task received: " + content.split('=')[1])
         task = content.split('=')[1]
@@ -121,16 +121,17 @@ async def get_current_and_last_captured_pokemon(channel, server):
     msg = None
 
     def check(message):
-        return message.embeds[0].content == True #TODO
+        return message.embeds[0]['author']['name'] == "Professor Oak" #TODO
 
     while msg == None:
         await client.send_message(channel, "p!info")
-        msg = await client.wait_for_message(channel=channel, author=getAuthor("Pokécord", server), check=check)
+        msg = await client.wait_for_message(channel=channel, author=discordUtils.getAuthor(server, "Pokécord"), check=check)
 
-    currentPattern = re.compile("r(\d+)\/")
+    currentPattern = re.compile(r"(\d+)\/")
     lastPattern = re.compile(r"\/(\d+)")
-    current = re.match(currentPattern, msg)
-    last = re.match(lastPattern, msg)
+    current = re.findall(currentPattern, msg.embeds[0]['footer']['text'])[0]
+    last = re.findall(lastPattern, msg.embeds[0]['footer']['text'])[0]
+
     return current, last
 
 
@@ -144,19 +145,19 @@ async def get_best_stats_for_pokemon(pName, server):
     msg = None
 
     def check(msg):
-        print(msg.embeds[0])
         return msg.embeds[0]['title'] == 'Your pokémon:'
 
     def getIds(description):
         lines = description.split("\n")
         for l in lines:
-            n = l.split("Number: ")[1]
+            pattern = re.compile(r"Number: (\d+)")
+            n = re.findall(pattern, l)[0]
             yield int(n)
 
     while(msg==None):
+        await asyncio.sleep(2)
         await client.send_message(channel[0], "p!pokemon --name " + pName)
-        author = discordUtils.getAuthor("Pokécord", server)
-        print(author.name)
+        author = discordUtils.getAuthor(server, "Pokécord")
         msg = await client.wait_for_message(timeout=10, author=author, check=check)
 
     description = msg.embeds[0]['description']
