@@ -91,8 +91,8 @@ async def auto_catch_pokemons(server, channel, embeds, author, content):
                      catchMessage = 'p!catch ' + pokeName
                      await client.send_message(channel, catchMessage)
                      print(" ##### - Legendary pokemon catched: " + pokeName)
-                     await client.send_message(getChannel(client, "pokecord")[0], "@Lolo, tu as catché du GROS GROS Régal")
-                     await client.send_message(getChannel(client, "pokecord")[0], "p!info " + pokeName)
+                     await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], constants.LEGENDARY_CATCHED_MESSAGE)
+                     await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], "p!info " + pokeName)
 
 async def orders_from_captains(server, channel, embeds, author, content):
     global hashScores
@@ -102,7 +102,7 @@ async def orders_from_captains(server, channel, embeds, author, content):
     if content.startswith('ord='):
         print("Order received: " + content.split('=')[1])
         order = content.split('=')[1]
-        await client.send_message(getChannel(client, "pokecord")[0], order)
+        await client.send_message(getChannel(client, constants.INFO_CHANNEL)[0], order)
     elif content.startswith('task='):
         print("Task received: " + content.split('=')[1])
         task = content.split('=')[1]
@@ -135,7 +135,7 @@ async def get_current_and_last_captured_pokemon(channel, server):
 
 
 async def get_best_stats_for_pokemon(pName, server):
-    channel = discordUtils.getChannel(client, "pokecord")
+    channel = discordUtils.getChannel(client, constants.INFO_CHANNEL)
     await client.send_message(channel[0], "#TASK - Stats task started")
     await asyncio.sleep(2)
 
