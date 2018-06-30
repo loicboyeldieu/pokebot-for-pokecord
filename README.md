@@ -12,11 +12,11 @@ The current version only catch legendary pokemons to avoid being ban by capturin
 - Clone this project
 - Change the _libs/constants.py_ file with your config
 >  BOT_CHANNEL    : The channel name in which the bot will be typing and catching pokemons.
-
+>
 >  INFO_CHANNEL   : The channel name where bot informations will be typed (for exemple, to alert you when you have catched a legendary one)
-
+>
 >  CATCH_CHANNELS : Any other channels where you wish the bot to catch pokemons. 
-
+>
 >  CAPTAINS       : User names the bot will listen to for orders and tasks
 - In a terminal, run: `python3 pokebot.py <YOUR_DISCORD_USER_TOKEN>`
 
@@ -34,4 +34,5 @@ The current version only catch legendary pokemons to avoid being ban by capturin
 >  task=stats <pokemonName>
 - **NEW** Get pokemons with best IVs in a selected range of pokemon indexes
 >  task=maxivs <range_start> <range_end> <file_name_to_export>
+>
 > For exemple: _task=maxivs 1 10 save.txt_ will find sort ivs (from best to worse) for the pokemon from index 1 to 10.
