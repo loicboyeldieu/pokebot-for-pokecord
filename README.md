@@ -32,3 +32,6 @@ The current version only catch legendary pokemons to avoid being ban by capturin
 >  task=stoppex
 - Get stats for all <pokemonName> caught
 >  task=stats <pokemonName>
+- **NEW** Get pokemons with best IVs in a selected range of pokemon indexes
+>  task=maxivs <range_start> <range_end> <file_name_to_export>
+> For exemple: _task=maxivs 1 10 save.txt_ will find sort ivs (from best to worse) for the pokemon from index 1 to 10.
